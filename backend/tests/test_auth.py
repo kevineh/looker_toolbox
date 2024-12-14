@@ -16,7 +16,7 @@ def mock_looker_client():
 
 
 def test_login_success(mock_looker_client):
-    response = client.post(
+    response = mock_looker_client.post(
         "/api/auth/login", json={"client_id": "test_id", "client_secret": "test_secret"}
     )
     assert response.status_code == 200
@@ -26,7 +26,7 @@ def test_login_success(mock_looker_client):
 
 def test_login_invalid_credentials(mock_looker_client):
     mock_looker_client.validate_connection.return_value = False
-    response = client.post(
+    response = mock_looker_client.post(
         "/api/auth/login",
         json={"client_id": "invalid_id", "client_secret": "invalid_secret"},
     )
@@ -35,12 +35,12 @@ def test_login_invalid_credentials(mock_looker_client):
 
 def test_verify_token(mock_looker_client):
     # First login to get token
-    login_response = client.post(
+    login_response = mock_looker_client.post(
         "/api/auth/login", json={"client_id": "test_id", "client_secret": "test_secret"}
     )
     token = login_response.json()["access_token"]
 
-    response = client.get(
+    response = mock_looker_client.get(
         "/api/auth/verify", headers={"Authorization": f"Bearer {token}"}
     )
     assert response.status_code == 200
