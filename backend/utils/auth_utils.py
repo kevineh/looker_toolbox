@@ -3,7 +3,7 @@ from typing import Optional
 from jose import JWTError, jwt
 from fastapi import HTTPException
 import os
-from dotenv import load_load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
