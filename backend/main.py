@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from api import auth, dashboards, migration
 from middleware.auth_middleware import verify_token_middleware
@@ -20,11 +20,11 @@ app.include_router(
     dashboards.router,
     prefix="/api/dashboards",
     tags=["dashboards"],
-    dependencies=[verify_token_middleware],
+    dependencies=[Depends(verify_token_middleware)],
 )
 app.include_router(
     migration.router,
     prefix="/api/migration",
     tags=["migration"],
-    dependencies=[verify_token_middleware],
+    dependencies=[Depends(verify_token_middleware)],
 )

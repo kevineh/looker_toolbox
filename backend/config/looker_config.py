@@ -15,3 +15,4 @@ class LookerSettings(BaseSettings):
 
     class Config:
         env_file = ".env"
+        env_prefix = "LOOKER_"
